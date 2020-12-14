@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import classes from './ContactForm.module.css';
 import { connect } from 'react-redux';
-import newContact from '../../redux/listActions';
+import newContact from '../../redux/contacts/contactsOperation';
 import AnswerError from '../AnswerError/AnswerError';
+import selector from "../../redux/listSelector"
 
 class ContactForm extends Component {
   state = {
     name: '',
     number: '',
     isVisible: false,
-    messeg: 'jdfihgeriujdfmkl',
-  };
+      };
 
   handleChange = ({ target }) => {
     this.setState({
@@ -42,6 +42,7 @@ class ContactForm extends Component {
 
   render() {
     const { name, number, isVisible, messeg } = this.state;
+
     return (
       <>
         <div>
@@ -84,7 +85,7 @@ class ContactForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  list: state.contacts.items,
+  list: selector.getForm(state),
 });
 
 const mapDispatchToProps = {

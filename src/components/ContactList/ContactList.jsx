@@ -3,16 +3,12 @@ import PropTypes from 'prop-types';
 import classes from './ContactList.module.css';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import listActions from '../../redux/listActions';
+import contactsOperation from '../../redux/contacts/contactsOperation';
+import selector from "../../redux/listSelector"
 
 class ContactList extends Component {
-  componentDidUpdate(prevProps, prevState) {
-    // if (prevProps.list !== this.props.list) {
-    //   localStorage.setItem('contacts', JSON.stringify(this.props.list));
-    // }
-  }
   render() {
-    return (
+     return (
       <>
         <TransitionGroup component="ul" className={classes.container}>
           {this.props.list.map(el => {
@@ -39,22 +35,14 @@ class ContactList extends Component {
 
 ContactList.propTypes = {
   Delete: PropTypes.func.isRequired,
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ),
+  list: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  list: state.contacts.items.filter(contact =>
-    contact.name.toLowerCase().includes(state.contacts.filter.toLowerCase()),
-  ),
+  list: selector.getList(state),
 });
 const mapDispatchToProps = {
-  Delete: listActions.removeContact,
+  Delete: contactsOperation.removeContact,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

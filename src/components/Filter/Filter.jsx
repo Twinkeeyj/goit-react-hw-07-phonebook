@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import listAction from '../../redux/listActions';
+import selector from "../../redux/listSelector"
+
 
 const FilterName = ({ filterRender, filter }) => (
   <div>
@@ -21,7 +23,7 @@ FilterName.propTypes = {
 
 const mapStateToProps = state =>
 ({
-  filter: state.filter,
+  filter: selector.getFilter(state),
 });
 const mapDispatchToProps = {
   filterRender: listAction.filterContact,
